@@ -2204,7 +2204,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const initialSliderImages = [
         { src: 'face.jpg', menuIdx: -1 },
         { src: 'v_zal.jpg', menuIdx: -1 },
-        { src: 'office.jpg', menuIdx: -1 },
         { src: 'sklad.jpg', menuIdx: -1 },
         { src: 'v1.jpg', menuIdx: -1 },
         { src: 'v2.jpg', menuIdx: -1 },
@@ -2362,8 +2361,7 @@ ${sliderImages.length && sliderImages[sliderIndex] && sliderImages[sliderIndex].
         if (
             sliderImages.length &&
             sliderImages[sliderIndex] &&
-            (sliderImages[sliderIndex].src === 'face.jpg' || sliderImages[sliderIndex].src === 'v_zal.jpg' ||
-                sliderImages[sliderIndex].src === 'office.jpg' || sliderImages[sliderIndex].src === 'sklad.jpg' ||
+            (sliderImages[sliderIndex].src === 'face.jpg' || sliderImages[sliderIndex].src === 'v_zal.jpg' || sliderImages[sliderIndex].src === 'sklad.jpg' ||
                 sliderImages[sliderIndex].src === 'v1.jpg' || sliderImages[sliderIndex].src === 'v2.jpg' ||
                 sliderImages[sliderIndex].src === 'v3.jpg' || sliderImages[sliderIndex].src === 'v4.jpg'
             )
