@@ -321,13 +321,30 @@ h2 {
   }
 }
 
-#burger-menu {
+/* #burger-menu {
   z-index: 9999 !important;
   overflow-y: auto !important;
-  /* дозволяє скролити меню пальцем */
   -webkit-overflow-scrolling: touch;
-  /* плавний скролінг на iOS */
   max-height: 100vh;
+} */
+
+#burger-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;
+  flex-direction: column;
+  background: rgba(0,57,31,0.98);
+}
+
+#burger-menu-list {
+  flex: 1 1 0;
+  overflow-y: auto;
+  max-height: 100vh;
+  -webkit-overflow-scrolling: touch; /* плавний скрол на iOS */
+  margin: 0;
+  padding: 0 0 24px 0;
+  list-style: none;
 }
 
 #burger-menu-btn {
