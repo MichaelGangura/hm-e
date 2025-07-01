@@ -36,6 +36,10 @@ body {
   box-sizing: border-box;
 }
 
+#gallery-root {
+    background: url(wall.jpg) center center / cover no-repeat fixed !important;
+  }
+
 .logo-container {
   display: flex;
   flex-direction: row;
@@ -495,8 +499,9 @@ h2 {
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
+  background: transparent !important;
 }
-#slider img {
+/* #slider img {
   width: 100% !important;
   height: 100% !important;
   object-fit: contain !important;
@@ -505,7 +510,25 @@ h2 {
   padding: 0 !important;
   box-sizing: border-box;
   background: transparent;
-  border: none;
   position: absolute;
   top: 0; left: 0;
+} */
+
+#slider img {
+  max-width: 96vw;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  box-shadow: 4px 10px 10px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  background: #fff;
+  box-sizing: border-box;
+  object-fit: contain;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+  margin: 0;
+  padding: 0;
 }

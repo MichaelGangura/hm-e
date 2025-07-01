@@ -1817,7 +1817,7 @@ document.addEventListener('DOMContentLoaded', function () {
         burgerList.innerHTML = '';
 
         // --- Додаємо поле пошуку у бургер-меню ---
-        if (menuKey === 'main') {
+        /* if (menuKey === 'main') {
             const searchLi = document.createElement('li');
             searchLi.style.marginBottom = '12px';
             searchLi.innerHTML = `
@@ -1886,7 +1886,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 renderSlider();
                 // НЕ закриваємо бургер-меню!
             });
-        }
+        } */
 
         // --- Додаємо пункт "Про нас і контакти" ---
         if (menuKey === 'main') {
@@ -2466,15 +2466,6 @@ ${sliderImages.length && sliderImages[sliderIndex] && sliderImages[sliderIndex].
         const img = document.createElement('img');
         img.src = sliderImages[sliderIndex].src;
         img.style.cssText = `
-    display: block;
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    background: transparent;
-    box-shadow: none;
-    border: none;
     padding: 0;
     margin: 0;
     opacity: 0;
@@ -2502,7 +2493,7 @@ ${sliderImages.length && sliderImages[sliderIndex] && sliderImages[sliderIndex].
         const left = document.createElement('button');
         left.className = 'slider-arrow left';
         left.style.cssText = arrowStyle + 'justify-content:flex-start;'; // Додаємо
-        left.innerHTML = `<svg width="72" height="72" viewBox="0 0 72 72"><polyline points="48,12 24,36 48,60" style="fill:none;stroke:#00391F;stroke-width:2"/></svg>`;
+        left.innerHTML = `<svg width="72" height="72" viewBox="0 0 72 72"><polyline points="48,12 24,36 48,60" style="fill:none;stroke:#fff;stroke-width:2"/></svg>`;
         left.onclick = () => { sliderIndex = (sliderIndex - 1 + sliderImages.length) % sliderImages.length; renderSlider(); };
         slider.appendChild(left);
 
@@ -2510,7 +2501,7 @@ ${sliderImages.length && sliderImages[sliderIndex] && sliderImages[sliderIndex].
         const right = document.createElement('button');
         right.className = 'slider-arrow right';
         right.style.cssText = arrowStyle + 'justify-content:flex-end;'; // Додаємо
-        right.innerHTML = `<svg width="72" height="72" viewBox="0 0 72 72"><polyline points="24,12 48,36 24,60" style="fill:none;stroke:#00391F;stroke-width:2"/></svg>`;
+        right.innerHTML = `<svg width="72" height="72" viewBox="0 0 72 72"><polyline points="24,12 48,36 24,60" style="fill:none;stroke:#fff;stroke-width:2"/></svg>`;
         right.onclick = () => { sliderIndex = (sliderIndex + 1) % sliderImages.length; renderSlider(); };
         slider.appendChild(right);
 
