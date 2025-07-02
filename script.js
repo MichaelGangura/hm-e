@@ -1814,6 +1814,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const burgerList = document.getElementById('burger-menu-list');
 
     function renderBurgerMenu(menuKey = 'main') {
+        console.log('renderBurgerMenu', menuKey, galleryData[menuKey]);
         burgerList.innerHTML = '';
 
         // --- Додаємо поле пошуку у бургер-меню ---
@@ -1945,18 +1946,19 @@ document.addEventListener('DOMContentLoaded', function () {
             li.onclick = () => {
                 if (item.type === 'category' && galleryData[item.id]) {
                     renderBurgerMenu(item.id);
-                } else if (item.type === 'set' && photoSets[item.id]) {
+                } else if (item.type === 'set' && photoSets[item.id] && photoSets[item.id].length) {
                     // Показати галерею, сховати About
                     const staticContent = document.querySelector('.static-content');
                     if (staticContent) staticContent.style.display = 'none';
                     const galleryRoot = document.getElementById('gallery-root');
-                    if (galleryRoot) galleryRoot.style.display = '';
-                    // Відкрити потрібний набір фото
+                    if (galleryRoot) galleryRoot.style.display = 'block';
+
+                    // Оновити слайдер
                     currentMenu = item.id;
-                    renderSidebar(currentMenu);
-                    sliderImages = photoSets[currentMenu].map(src => ({ src, menuIdx: -1 }));
+                    sliderImages = photoSets[item.id].map(src => ({ src, menuIdx: -1 }));
                     sliderIndex = 0;
                     renderSlider();
+
                     // Закрити бургер-меню і повернути бургер-кнопку
                     burgerMenu.style.display = 'none';
                     burgerBtn.classList.remove('active');
@@ -2125,7 +2127,6 @@ document.addEventListener('DOMContentLoaded', function () {
         position: fixed !important;
         left: 0; top: 0;
         z-index: 2;
-        background: #fff;
     }
     #sidebar {
         display: none !important;
@@ -2134,21 +2135,6 @@ document.addEventListener('DOMContentLoaded', function () {
 `;
 
     document.head.appendChild(style);
-
-
-    // Повернення до галереї
-    const backBtn = document.getElementById('back-to-gallery');
-    if (backBtn) {
-        backBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-            document.querySelector('.static-content').style.display = 'none';
-            const galleryRoot = document.getElementById('gallery-root');
-            galleryRoot.style.display = 'block';
-            setTimeout(() => {
-                galleryRoot.scrollIntoView({ behavior: 'smooth' });
-            }, 10); // Дати браузеру час перемалювати DOM
-        });
-    }
 
     // Додаємо overlay для логотипу та ефект наведення
     setTimeout(() => {
@@ -2312,6 +2298,7 @@ ${sliderImages.length && sliderImages[sliderIndex] && sliderImages[sliderIndex].
             };
             div.onclick = () => {
                 if (item.type === 'category' || item.type === 'set') {
+                    stopAutoSlider();
                     currentMenu = item.id;
                     if (galleryData[currentMenu]) {
                         renderSidebar(currentMenu);
@@ -2450,9 +2437,16 @@ ${sliderImages.length && sliderImages[sliderIndex] && sliderImages[sliderIndex].
 
 
     function renderSlider() {
+
+        if (
+            sliderImages.length !== initialSliderImages.length ||
+            !sliderImages.every((img, i) => img.src === initialSliderImages[i].src)
+        ) {
+            stopAutoSlider();
+        }
+
         const slider = document.getElementById('slider');
         slider.innerHTML = '';
-        slider.style.background = '#fff';
         slider.style.position = 'relative';
         slider.style.width = '100%';
         slider.style.height = '100%';
@@ -2463,13 +2457,21 @@ ${sliderImages.length && sliderImages[sliderIndex] && sliderImages[sliderIndex].
             slider.innerHTML = '<div style="color:#888;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:2em;">Оберіть категорію</div>';
             return;
         }
+        // ...existing code...
+        console.log('renderSlider', sliderImages, sliderIndex);
+
         const img = document.createElement('img');
         img.src = sliderImages[sliderIndex].src;
         img.style.cssText = `
-    padding: 0;
-    margin: 0;
-    opacity: 0;
-    transition: opacity 0.5s;
+        padding: 0;
+        margin: 0;
+        opacity: 0;
+        transition: opacity 0.5s;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+        background: transparent;
 `;
 
         img.onload = function () {
@@ -2479,7 +2481,6 @@ ${sliderImages.length && sliderImages[sliderIndex] && sliderImages[sliderIndex].
         slider.appendChild(img);
 
         // Стрілки
-        // ...existing code...
 
         const arrowStyle = `
     position:absolute;top:50%;transform:translateY(-50%);
@@ -2510,23 +2511,28 @@ ${sliderImages.length && sliderImages[sliderIndex] && sliderImages[sliderIndex].
         // Додаємо лупу після рендеру фото
         enableMagnifierForSlider();
     }
-    // ...existing code...
-
-    // Плавна поява
-    setTimeout(() => {
-        img.style.opacity = '1';
-    }, 10);
-
-    if (
-        sliderImages.length === initialSliderImages.length &&
-        sliderImages.every((img, i) => img.src === initialSliderImages[i].src)
-    ) {
-        startAutoSlider();
-    } else {
-        stopAutoSlider();
-    }
 
     // Initial render after DOM is ready
     renderSidebar('main');
     renderSlider();
+
+    document.getElementById('b1')?.addEventListener('click', function () {
+        document.querySelector('.static-content').style.display = 'none';
+        document.getElementById('gallery-root').style.display = 'block';
+    });
+
+    document.getElementById('go-to-gallery')?.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector('.static-content').style.display = 'none';
+        document.getElementById('gallery-root').style.display = 'block';
+    });
+});
+
+/* Прокрутка до контактів */
+document.getElementById('b2')?.addEventListener('click', function (e) {
+
+    // Плавно прокрутити до секції контактів
+    setTimeout(function () {
+        document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 10); // невелика затримка, щоб контент точно був видимий
 });
